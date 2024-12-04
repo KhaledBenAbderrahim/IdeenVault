@@ -1,29 +1,38 @@
 # 🚀 IdeenVault
 
 ## 📝 Description
-IdeenVault is an innovative idea management system designed to help users capture, organize, and develop their creative thoughts and projects. The name combines "Ideen" (German for ideas) with "Vault," emphasizing secure storage and management of valuable ideas.
+IdeenVault is a modern web application built with React and Vite for efficient idea management and organization. The name combines "Ideen" (German for ideas) with "Vault," emphasizing secure storage and management of valuable ideas.
 
-## ✨ Features
-- 📱 Modern and intuitive user interface
-- 💡 Efficient idea organization and categorization
-- 🔍 Powerful search functionality
-- 🔒 Secure data storage
-- 📊 Project tracking and management
+## ✨ Key Features
+- 💡 Intuitive idea creation and management
+- 📊 Interactive analytics dashboard
+- 💬 Discussion system for collaborative ideation
+- 📱 Mobile-responsive design
+- 🔍 Advanced search and filtering
+- 📄 PDF export functionality
+- 📱 QR code generation for mobile access
 
-## 🛠️ Technologies Used
-- Python
-- Flask
-- SQLite
-- HTML/CSS
-- JavaScript
+## 🛠️ Tech Stack
+- **Frontend Framework:** React 18
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **Routing:** React Router DOM
+- **Charts:** Chart.js with react-chartjs-2
+- **Animations:** Framer Motion
+- **UI Components:** 
+  - Headless UI
+  - Heroicons
+- **PDF Generation:** React-PDF Renderer
+- **QR Code:** qrcode.react
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.8+
-- pip (Python package manager)
+- Node.js (v14 or higher)
+- npm or yarn
 
 ### Installation
+
 1. Clone the repository
 ```bash
 git clone https://github.com/KhaledBenAbderrahim/IdeenVault.git
@@ -36,13 +45,49 @@ cd IdeenVault
 
 3. Install dependencies
 ```bash
-pip install -r requirements.txt
+npm install
+# or
+yarn install
 ```
 
-4. Run the application
+4. Start the development server
 ```bash
-python app.py
+npm run dev
+# or
+yarn dev
 ```
+
+5. Build for production
+```bash
+npm run build
+# or
+yarn build
+```
+
+## 🌐 Project Structure
+```
+ideenvault/
+├── src/
+│   ├── components/
+│   │   ├── dashboard/
+│   │   └── common/
+│   ├── context/
+│   ├── assets/
+│   └── utils/
+├── public/
+└── dist/
+```
+
+## 🔧 Configuration
+- `vite.config.js` - Vite configuration
+- `tailwind.config.js` - Tailwind CSS configuration
+- `postcss.config.js` - PostCSS configuration
+
+## 🚀 Deployment
+This project is configured for deployment on Vercel, offering:
+- Automatic deployments
+- Preview deployments for pull requests
+- Custom domain support
 
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
