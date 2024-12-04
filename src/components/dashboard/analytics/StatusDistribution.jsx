@@ -23,9 +23,12 @@ export default function StatusDistribution({ data }) {
       legend: {
         position: 'bottom',
         labels: {
-          padding: 20,
+          padding: window.innerWidth < 640 ? 10 : 20,
           usePointStyle: true,
-          font: { size: 12, family: 'Inter' }
+          font: { 
+            size: window.innerWidth < 640 ? 10 : 12,
+            family: 'Inter' 
+          }
         }
       }
     },
@@ -33,9 +36,9 @@ export default function StatusDistribution({ data }) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-medium text-gray-900 mb-4">Status Verteilung</h3>
-      <div className="h-64">
+    <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+      <h3 className="text-sm sm:text-lg font-medium text-gray-900 mb-4">Status Verteilung</h3>
+      <div className="h-48 sm:h-64">
         <Doughnut data={chartData} options={options} />
       </div>
     </div>

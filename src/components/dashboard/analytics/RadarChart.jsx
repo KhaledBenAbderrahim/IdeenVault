@@ -1,23 +1,5 @@
 import React from 'react';
 import { Radar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-} from 'chart.js';
-
-ChartJS.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-);
 
 export default function RadarChart({ data }) {
   const chartData = {
@@ -32,7 +14,8 @@ export default function RadarChart({ data }) {
         pointBackgroundColor: 'rgb(16, 185, 129)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(16, 185, 129)'
+        pointHoverBorderColor: 'rgb(16, 185, 129)',
+        pointRadius: window.innerWidth < 640 ? 2 : 3
       },
       {
         label: 'Benchmark',
@@ -43,7 +26,8 @@ export default function RadarChart({ data }) {
         pointBackgroundColor: 'rgb(99, 102, 241)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(99, 102, 241)'
+        pointHoverBorderColor: 'rgb(99, 102, 241)',
+        pointRadius: window.innerWidth < 640 ? 2 : 3
       }
     ]
   };
@@ -58,25 +42,40 @@ export default function RadarChart({ data }) {
           color: 'rgba(0, 0, 0, 0.1)'
         },
         suggestedMin: 0,
-        suggestedMax: 5
+        suggestedMax: 5,
+        ticks: {
+          font: {
+            size: window.innerWidth < 640 ? 8 : 10,
+            family: 'Inter'
+          }
+        },
+        pointLabels: {
+          font: {
+            size: window.innerWidth < 640 ? 8 : 10,
+            family: 'Inter'
+          }
+        }
       }
     },
     plugins: {
       legend: {
         position: 'bottom',
         labels: {
-          padding: 20,
+          padding: window.innerWidth < 640 ? 10 : 20,
           usePointStyle: true,
-          font: { size: 12, family: 'Inter' }
+          font: { 
+            size: window.innerWidth < 640 ? 10 : 12,
+            family: 'Inter' 
+          }
         }
       }
     }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-medium text-gray-900 mb-4">Ideenbewertung im Vergleich</h3>
-      <div className="h-64">
+    <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+      <h3 className="text-sm sm:text-lg font-medium text-gray-900 mb-4">Ideenbewertung im Vergleich</h3>
+      <div className="h-48 sm:h-64">
         <Radar data={chartData} options={options} />
       </div>
     </div>

@@ -14,8 +14,8 @@ export default function PhaseProgress({ data }) {
       pointBackgroundColor: '#ffffff',
       pointBorderColor: 'rgb(16, 185, 129)',
       pointBorderWidth: 2,
-      pointRadius: 4,
-      pointHoverRadius: 6
+      pointRadius: window.innerWidth < 640 ? 3 : 4,
+      pointHoverRadius: window.innerWidth < 640 ? 4 : 6
     }]
   };
 
@@ -32,20 +32,32 @@ export default function PhaseProgress({ data }) {
         beginAtZero: true,
         grid: {
           display: false
+        },
+        ticks: {
+          font: {
+            size: window.innerWidth < 640 ? 10 : 12,
+            family: 'Inter'
+          }
         }
       },
       x: {
         grid: {
           display: false
+        },
+        ticks: {
+          font: {
+            size: window.innerWidth < 640 ? 10 : 12,
+            family: 'Inter'
+          }
         }
       }
     }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-medium text-gray-900 mb-4">Phase Fortschritt</h3>
-      <div className="h-64">
+    <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+      <h3 className="text-sm sm:text-lg font-medium text-gray-900 mb-4">Phase Fortschritt</h3>
+      <div className="h-48 sm:h-64">
         <Line data={chartData} options={options} />
       </div>
     </div>
