@@ -1,7 +1,12 @@
 # 🚀 IdeenVault
 
+![IdeenVault Interface](https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/iPhone%2016%20Pro.png)
+
 ## 📝 Description
-IdeenVault is a modern web application built with React and Vite for efficient idea management and organization. The name combines "Ideen" (German for ideas) with "Vault," emphasizing secure storage and management of valuable ideas.
+IdeenVault is a sophisticated web application that revolutionizes the way we manage and organize ideas. Built with React and Vite, it combines German innovation ("Ideen" meaning ideas) with robust security ("Vault"), creating a powerful platform for creative minds. The sleek, modern interface showcases a thoughtfully designed dashboard that makes idea management both intuitive and efficient.
+
+### 🎯 Vision
+Our vision is to provide a centralized hub where individuals and teams can capture, develop, and transform their ideas into reality. The clean, minimalist design ensures that users can focus on what matters most - their creative process.
 
 ## ✨ Key Features
 - 💡 Intuitive idea creation and management
