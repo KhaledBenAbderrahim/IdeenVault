@@ -36,7 +36,7 @@ export default function MobileMenu({
                   className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-emerald-400"
                   onClick={(e) => handleNavigation(e, '/')}
                 >
-                  IdeenVault
+                  Ideenspeicher
                 </Link>
                 <button
                   onClick={onClose}

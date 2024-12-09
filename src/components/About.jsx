@@ -115,14 +115,14 @@ export default function About() {
                 Das Dream-Team
               </span>
               <br />
-              <span className="text-gray-900">hinter IdeenVault</span>
+              <span className="text-gray-900">hinter Ideenspeicher</span>
             </motion.h1>
 
             <motion.p 
               variants={itemVariants}
               className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
             >
-              Lernen Sie die kreativen Köpfe kennen, die IdeenVault zu dem machen, was es ist.
+              Lernen Sie die kreativen Köpfe kennen, die Ideenspeicher zu dem machen, was es ist.
               Ein Team, das Innovation, Technologie und Struktur perfekt vereint.
             </motion.p>
           </motion.div>

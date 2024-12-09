@@ -46,7 +46,7 @@ export default function Hero() {
             >
               Ideen
             </motion.span>
-            <span className="text-gray-900">Vault</span>
+            <span className="text-gray-900">speicher</span>
           </motion.h1>
 
           <motion.p 

@@ -47,7 +47,7 @@ export default function MobileAppPromo() {
                     transition={{ delay: 0.1 }}
                     className="mt-6 text-6xl font-bold tracking-tight text-white sm:text-7xl"
                   >
-                    IdeenVault
+                    Ideenspeicher
                     <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
                       Mobile App
                     </span>
@@ -63,7 +63,7 @@ export default function MobileAppPromo() {
                   className="text-xl text-gray-400 leading-relaxed max-w-xl"
                 >
                   Entdecken Sie eine neue Dimension der Ideenfindung. 
-                  Mit IdeenVault haben Sie die Kraft der Innovation 
+                  Mit Ideenspeicher haben Sie die Kraft der Innovation 
                   immer in Ihrer Tasche.
                 </motion.p>
 

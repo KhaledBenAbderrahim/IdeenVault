@@ -29,7 +29,7 @@ export default function DashboardLayout() {
             {/* Logo and Mobile Menu Button */}
             <div className="flex items-center">
               <Link to="/" className="text-2xl font-bold text-emerald-600">
-                IdeenVault
+                Ideenspeicher
               </Link>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

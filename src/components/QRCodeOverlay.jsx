@@ -50,7 +50,7 @@ export default function QRCodeOverlay() {
                 </p>
                 <div className="bg-emerald-50 p-6 rounded-xl mb-6 inline-block">
                   <QRCodeSVG
-                    value="https://ideen-vault.vercel.app/"
+                    value="https://ideenspeicher.vercel.app/"
                     size={200}
                     level="H"
                     includeMargin={true}
@@ -59,7 +59,7 @@ export default function QRCodeOverlay() {
                   />
                 </div>
                 <p className="text-xs text-gray-500">
-                  https://ideen-vault.vercel.app/
+                  https://ideenspeicher.vercel.app/
                 </p>
               </div>
             </motion.div>

@@ -10,7 +10,7 @@ export default function Logo({ handleNavigation }) {
         className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-emerald-400 hover:opacity-80 transition-opacity"
         onClick={(e) => handleNavigation(e, '/')}
       >
-        IdeenVault
+        Ideenspeicher
       </Link>
     </div>
   );
