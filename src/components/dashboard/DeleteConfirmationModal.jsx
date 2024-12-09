@@ -59,18 +59,22 @@ export default function DeleteConfirmationModal({ isOpen, onClose, onConfirm, id
             animate="visible"
             exit="exit"
             onClick={e => e.stopPropagation()}
-            className="relative bg-white rounded-2xl shadow-xl max-w-md w-full overflow-hidden"
+            className="relative bg-white rounded-2xl shadow-xl max-w-md w-full overflow-hidden border border-emerald-100"
           >
             {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-red-50 to-white opacity-50" />
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-emerald-50/30 to-white" />
 
             {/* Content */}
             <div className="relative p-6 sm:p-8">
               <div className="text-center">
                 {/* Warning Icon */}
-                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6 transform-gpu transition-transform hover:scale-110">
+                <motion.div 
+                  className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-50 mb-6"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <motion.svg 
-                    className="h-8 w-8 text-red-600"
+                    className="h-8 w-8 text-emerald-600"
                     initial={{ rotate: 0 }}
                     animate={{ rotate: [0, -10, 10, -10, 10, 0] }}
                     transition={{ duration: 0.5, delay: 0.2 }}
@@ -85,34 +89,43 @@ export default function DeleteConfirmationModal({ isOpen, onClose, onConfirm, id
                       d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" 
                     />
                   </motion.svg>
-                </div>
+                </motion.div>
 
                 {/* Title & Description */}
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+                <motion.h3 
+                  className="text-xl sm:text-2xl font-bold text-gray-900 mb-3"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
                   Idee löschen
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-8">
-                  Sind Sie sicher, dass Sie die Idee <span className="font-medium text-gray-900">"{ideaTitle}"</span> löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.
-                </p>
+                </motion.h3>
+                <motion.p 
+                  className="text-sm sm:text-base text-gray-600 mb-8"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  Sind Sie sicher, dass Sie die Idee <span className="font-medium text-emerald-700">"{ideaTitle}"</span> löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.
+                </motion.p>
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                   <motion.button
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.02, backgroundColor: '#f3f4f6' }}
                     whileTap={{ scale: 0.98 }}
+                    className="inline-flex justify-center items-center px-6 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors duration-200"
                     onClick={onClose}
-                    className="btn-secondary order-2 sm:order-1 text-sm sm:text-base px-6 py-2.5"
                   >
-                    <span>Abbrechen</span>
+                    Abbrechen
                   </motion.button>
                   <motion.button
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.02, backgroundColor: '#059669' }}
                     whileTap={{ scale: 0.98 }}
+                    className="inline-flex justify-center items-center px-6 py-2.5 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors duration-200"
                     onClick={onConfirm}
-                    className="relative overflow-hidden px-6 py-2.5 rounded-lg text-sm sm:text-base font-medium text-white bg-red-600 order-1 sm:order-2 shadow-sm hover:shadow-md transition-all duration-300"
                   >
-                    <span className="relative z-10">Endgültig löschen</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                    Löschen bestätigen
                   </motion.button>
                 </div>
               </div>

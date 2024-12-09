@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { mockIdeas } from '../../data/mockIdeas';
-import IdeaFilters from './ideas/IdeaFilters';
 import AllUserIdeasCard from './ideas/AllUserIdeasCard';
 import IdeaDetails from './IdeaDetails';
+import IdeaFilters from './ideas/IdeaFilters';
+import IdeaHeader from './ideas/IdeaHeader';
 import IdeaPagination from './ideas/IdeaPagination';
 
 export default function Ideas() {
@@ -17,7 +18,7 @@ export default function Ideas() {
   const [selectedIdea, setSelectedIdea] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 9;
 
   const filteredAndSortedIdeas = useMemo(() => {
     let filtered = mockIdeas.filter(idea => {
@@ -65,6 +66,14 @@ export default function Ideas() {
       animate={{ opacity: 1 }}
       className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
     >
+      <IdeaHeader
+        totalIdeas={filteredAndSortedIdeas.length}
+        sortOrder={sortOrder}
+        onSortChange={setSortOrder}
+        showFilters={showFilters}
+        onToggleFilters={() => setShowFilters(!showFilters)}
+      />
+
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <IdeaFilters
           searchTerm={searchTerm}
@@ -82,7 +91,6 @@ export default function Ideas() {
           showFilters={showFilters}
         />
 
-        {/* Single Column Layout */}
         <div className="divide-y divide-gray-200">
           {paginatedIdeas.map((idea) => (
             <motion.div
@@ -97,6 +105,23 @@ export default function Ideas() {
               />
             </motion.div>
           ))}
+
+          {paginatedIdeas.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="py-12 text-center"
+            >
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-4">
+                <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <p className="text-gray-500 text-sm sm:text-base">
+                Keine Ideen gefunden. Passen Sie Ihre Filter an oder erstellen Sie eine neue Idee.
+              </p>
+            </motion.div>
+          )}
         </div>
 
         <IdeaPagination
@@ -109,7 +134,10 @@ export default function Ideas() {
       </div>
 
       {selectedIdea && (
-        <IdeaDetails idea={selectedIdea} onClose={() => setSelectedIdea(null)} />
+        <IdeaDetails
+          idea={selectedIdea}
+          onClose={() => setSelectedIdea(null)}
+        />
       )}
     </motion.div>
   );

@@ -41,46 +41,35 @@ export function useIdeas() {
   const [userIdeas, setUserIdeas] = useState([]);
 
   useEffect(() => {
-    // Filter pending ideas
-    const pendingIdeas = mockIdeas.filter(idea => 
-      idea.creator === user?.name && 
-      idea.status === 'Offen' &&
-      !idea.hrApproved
-    );
-
-    // Filter approved ideas for the current user
-    const userApprovedIdeas = approvedIdeas.filter(idea =>
-      idea.creator === user?.name
-    );
-
-    // Combine pending and approved ideas
-    const allIdeas = [...pendingIdeas, ...userApprovedIdeas];
+    // Combine mock and approved ideas
+    const allIdeas = [...mockIdeas, ...approvedIdeas];
     
-    setUserIdeas(allIdeas);
+    // Filter ideas for the current user
+    const filteredIdeas = allIdeas.filter(idea => idea.creator === user?.name);
+    
+    setUserIdeas(filteredIdeas);
   }, [user]);
 
   const handleAddIdea = (newIdea) => {
-    setUserIdeas(prevIdeas => [
-      {
-        ...newIdea,
-        id: Math.max(...prevIdeas.map(i => i.id), 0) + 1,
-        creator: user.name,
-        status: 'Offen',
-        hrApproved: false,
-        createdAt: new Date().toISOString()
-      },
-      ...prevIdeas
-    ]);
+    const idea = {
+      ...newIdea,
+      id: Date.now(), // Generate a unique ID
+      creator: user?.name,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      hrApproved: false,
+      risk: Math.random() * 5,
+      attractiveness: Math.random() * 5
+    };
+
+    setUserIdeas(prevIdeas => [idea, ...prevIdeas]);
   };
 
   const handleDeleteIdea = (ideaId) => {
-    setUserIdeas(prevIdeas => prevIdeas.filter(i => i.id !== ideaId));
+    setUserIdeas(prevIdeas => prevIdeas.filter(idea => idea.id !== ideaId));
   };
 
-  // Count all ideas (both pending and approved)
   const totalIdeasCount = userIdeas.length;
-  
-  // Count only approved ideas
   const approvedIdeasCount = userIdeas.filter(idea => idea.hrApproved).length;
 
   return {
