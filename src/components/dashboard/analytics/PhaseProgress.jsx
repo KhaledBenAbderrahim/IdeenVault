@@ -1,5 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+import './utils/chartSetup';
 
 export default function PhaseProgress({ data }) {
   const chartData = {
@@ -20,8 +21,6 @@ export default function PhaseProgress({ data }) {
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false
@@ -55,9 +54,11 @@ export default function PhaseProgress({ data }) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 sm:p-6">
-      <h3 className="text-sm sm:text-lg font-medium text-gray-900 mb-4">Phase Fortschritt</h3>
-      <div className="h-48 sm:h-64">
+    <div>
+      <h3 className="text-sm sm:text-base font-medium text-gray-900 mb-3 sm:mb-4">
+        Phase Fortschritt
+      </h3>
+      <div className="h-[200px] sm:h-[250px]">
         <Line data={chartData} options={options} />
       </div>
     </div>

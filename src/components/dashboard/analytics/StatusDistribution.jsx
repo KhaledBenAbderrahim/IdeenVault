@@ -1,5 +1,6 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import './utils/chartSetup';
 
 export default function StatusDistribution({ data }) {
   const chartData = {
@@ -17,28 +18,28 @@ export default function StatusDistribution({ data }) {
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    cutout: '70%',
     plugins: {
       legend: {
         position: 'bottom',
         labels: {
-          padding: window.innerWidth < 640 ? 10 : 20,
           usePointStyle: true,
-          font: { 
+          padding: window.innerWidth < 640 ? 10 : 20,
+          font: {
             size: window.innerWidth < 640 ? 10 : 12,
-            family: 'Inter' 
+            family: 'Inter'
           }
         }
       }
-    },
-    cutout: '70%'
+    }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 sm:p-6">
-      <h3 className="text-sm sm:text-lg font-medium text-gray-900 mb-4">Status Verteilung</h3>
-      <div className="h-48 sm:h-64">
+    <div>
+      <h3 className="text-sm sm:text-base font-medium text-gray-900 mb-3 sm:mb-4">
+        Status Verteilung
+      </h3>
+      <div className="h-[200px] sm:h-[250px]">
         <Doughnut data={chartData} options={options} />
       </div>
     </div>

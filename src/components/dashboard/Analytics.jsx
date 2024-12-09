@@ -1,58 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-  RadialLinearScale,
-  Filler
-} from 'chart.js';
 import { mockIdeas } from '../../data/mockIdeas';
 import AnalyticsHeader from './analytics/AnalyticsHeader';
 import KPIGrid from './analytics/KPIGrid';
 import ChartsGrid from './analytics/ChartsGrid';
 import RiskMatrix from './analytics/RiskMatrix';
-
-// Register Chart.js components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-  RadialLinearScale,
-  Filler
-);
+import { calculateMetrics } from './analytics/utils/metricCalculations';
 
 export default function Analytics() {
-  // Cleanup chart instances on unmount
-  useEffect(() => {
-    return () => {
-      const charts = Object.values(ChartJS.instances);
-      charts.forEach(chart => chart.destroy());
-    };
-  }, []);
-
-  // Calculate metrics
-  const metrics = {
-    totalIdeas: mockIdeas.length,
-    activeIdeas: mockIdeas.filter(idea => idea.status === 'Aktiv').length,
-    inProgressIdeas: mockIdeas.filter(idea => idea.status === 'In Entwicklung').length,
-    openIdeas: mockIdeas.filter(idea => idea.status === 'Offen').length,
-    highPriorityIdeas: mockIdeas.filter(idea => idea.priority === 'Hoch').length,
-    aiIdeas: mockIdeas.filter(idea => idea.aiInfluence).length,
-    avgRisk: (mockIdeas.reduce((sum, idea) => sum + idea.risk, 0) / mockIdeas.length).toFixed(2),
-    avgAttractiveness: (mockIdeas.reduce((sum, idea) => sum + idea.attractiveness, 0) / mockIdeas.length).toFixed(2)
-  };
+  // Calculate metrics using utility function
+  const metrics = calculateMetrics(mockIdeas);
 
   // Calculate phase distribution
   const phases = ['Konzept', 'Entwicklung', 'Test', 'Produktion'];
@@ -70,7 +27,7 @@ export default function Analytics() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="space-y-4 sm:space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      className="space-y-4 sm:space-y-6 max-w-7xl mx-auto px-3 sm:px-4 lg:px-6"
     >
       <AnalyticsHeader />
       <KPIGrid metrics={metrics} />

@@ -42,8 +42,8 @@ export default function IdeaFilters({
 }) {
   return (
     <div className="border-b border-gray-200 bg-gray-50/50">
-      <div className="p-4 space-y-4">
-        <div className="flex flex-col space-y-4">
+      <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
+        <div className="flex flex-col space-y-3 sm:space-y-4">
           <SearchInput value={searchTerm} onChange={setSearchTerm} />
           <DateFilter value={dateFilter} onChange={setDateFilter} />
         </div>
@@ -54,7 +54,7 @@ export default function IdeaFilters({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="grid grid-cols-1 gap-4 mt-4"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
           >
             <FilterSelect
               label="Status"
