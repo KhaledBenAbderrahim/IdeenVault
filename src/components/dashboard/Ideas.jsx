@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { mockIdeas } from '../../data/mockIdeas';
 import IdeaDetails from './IdeaDetails';
@@ -18,10 +18,12 @@ export default function Ideas() {
   const [selectedIdea, setSelectedIdea] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const ideasPerPage = 8;
 
-  const filteredAndSortedIdeas = useMemo(() => {
-    let filtered = mockIdeas.filter(idea => {
+  // Memoized filter function to prevent unnecessary recalculations
+  const filterIdeas = useCallback((ideas) => {
+    return ideas.filter(idea => {
       const matchesSearch = idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          idea.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          idea.shortTitle.toLowerCase().includes(searchTerm.toLowerCase());
@@ -41,28 +43,56 @@ export default function Ideas() {
         default: return matchesSearch && matchesStatus && matchesCreator && matchesPriority && matchesPhase;
       }
     });
+  }, [searchTerm, statusFilter, creatorFilter, priorityFilter, phaseFilter, dateFilter]);
 
-    return filtered.sort((a, b) => {
-      const dateA = new Date(sortOrder === 'newest' ? a.createdAt : a.updatedAt);
-      const dateB = new Date(sortOrder === 'newest' ? b.createdAt : b.updatedAt);
+  // Memoized sort function
+  const sortIdeas = useCallback((ideas) => {
+    return [...ideas].sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
       return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
     });
-  }, [searchTerm, statusFilter, creatorFilter, priorityFilter, phaseFilter, dateFilter, sortOrder]);
+  }, [sortOrder]);
+
+  const filteredAndSortedIdeas = useMemo(() => {
+    try {
+      const filtered = filterIdeas(mockIdeas);
+      return sortIdeas(filtered);
+    } catch (error) {
+      console.error('Error processing ideas:', error);
+      return [];
+    }
+  }, [filterIdeas, sortIdeas, mockIdeas]);
 
   useEffect(() => {
-    setCurrentPage(1);
+    let mounted = true;
+
+    const updatePage = () => {
+      if (mounted) {
+        setCurrentPage(1);
+        setIsLoading(false);
+      }
+    };
+
+    setIsLoading(true);
+    const timeoutId = setTimeout(updatePage, 0);
+
+    return () => {
+      mounted = false;
+      clearTimeout(timeoutId);
+    };
   }, [searchTerm, statusFilter, creatorFilter, priorityFilter, phaseFilter, dateFilter, sortOrder]);
 
   const totalPages = Math.ceil(filteredAndSortedIdeas.length / ideasPerPage);
-  const displayedIdeas = filteredAndSortedIdeas.slice(
-    (currentPage - 1) * ideasPerPage,
-    currentPage * ideasPerPage
-  );
+  const displayedIdeas = useMemo(() => {
+    const startIndex = (currentPage - 1) * ideasPerPage;
+    return filteredAndSortedIdeas.slice(startIndex, startIndex + ideasPerPage);
+  }, [currentPage, filteredAndSortedIdeas, ideasPerPage]);
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = useCallback((pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
   const PaginationControls = () => {
     if (totalPages <= 1) return null;
@@ -108,7 +138,7 @@ export default function Ideas() {
             onClick={() => handlePageChange(number)}
             className={`px-4 py-2 rounded-md border ${
               currentPage === number
-                ? 'bg-emerald-50 text-emerald-600 border-emerald-200'
+                ? 'bg-blue-50 border-blue-500 text-blue-600'
                 : 'hover:bg-gray-50'
             }`}
           >
@@ -140,47 +170,59 @@ export default function Ideas() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-    >
-      <IdeaHeader
-        totalIdeas={filteredAndSortedIdeas.length}
-        sortOrder={sortOrder}
-        onSortChange={setSortOrder}
-        showFilters={showFilters}
-        onToggleFilters={() => setShowFilters(!showFilters)}
-      />
-
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <IdeaFilters
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <IdeaHeader
+          showFilters={showFilters}
+          setShowFilters={setShowFilters}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
-          dateFilter={dateFilter}
-          setDateFilter={setDateFilter}
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-          creatorFilter={creatorFilter}
-          setCreatorFilter={setCreatorFilter}
-          priorityFilter={priorityFilter}
-          setPriorityFilter={setPriorityFilter}
-          phaseFilter={phaseFilter}
-          setPhaseFilter={setPhaseFilter}
-          showFilters={showFilters}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
         />
 
-        <IdeaList
-          ideas={displayedIdeas}
-          onSelectIdea={setSelectedIdea}
-        />
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: showFilters ? 1 : 0, height: showFilters ? 'auto' : 0 }}
+          transition={{ duration: 0.3 }}
+          className="overflow-hidden"
+        >
+          <IdeaFilters
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+            creatorFilter={creatorFilter}
+            setCreatorFilter={setCreatorFilter}
+            priorityFilter={priorityFilter}
+            setPriorityFilter={setPriorityFilter}
+            phaseFilter={phaseFilter}
+            setPhaseFilter={setPhaseFilter}
+            dateFilter={dateFilter}
+            setDateFilter={setDateFilter}
+          />
+        </motion.div>
 
-        <PaginationControls />
+        {isLoading ? (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          </div>
+        ) : (
+          <>
+            <IdeaList
+              ideas={displayedIdeas}
+              selectedIdea={selectedIdea}
+              setSelectedIdea={setSelectedIdea}
+            />
+            <PaginationControls />
+          </>
+        )}
+
+        {selectedIdea && (
+          <IdeaDetails
+            idea={selectedIdea}
+            onClose={() => setSelectedIdea(null)}
+          />
+        )}
       </div>
-
-      {selectedIdea && (
-        <IdeaDetails idea={selectedIdea} onClose={() => setSelectedIdea(null)} />
-      )}
-    </motion.div>
+    </div>
   );
 }
