@@ -1,10 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { mockIdeas } from '../../data/mockIdeas';
-import IdeaDetails from './IdeaDetails';
 import IdeaFilters from './ideas/IdeaFilters';
-import IdeaList from './ideas/IdeaList';
-import IdeaHeader from './ideas/IdeaHeader';
+import AllUserIdeasCard from './ideas/AllUserIdeasCard';
+import IdeaDetails from './IdeaDetails';
 import IdeaPagination from './ideas/IdeaPagination';
 
 export default function Ideas() {
@@ -66,14 +65,6 @@ export default function Ideas() {
       animate={{ opacity: 1 }}
       className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
     >
-      <IdeaHeader
-        totalIdeas={filteredAndSortedIdeas.length}
-        sortOrder={sortOrder}
-        onSortChange={setSortOrder}
-        showFilters={showFilters}
-        onToggleFilters={() => setShowFilters(!showFilters)}
-      />
-
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <IdeaFilters
           searchTerm={searchTerm}
@@ -91,10 +82,22 @@ export default function Ideas() {
           showFilters={showFilters}
         />
 
-        <IdeaList
-          ideas={paginatedIdeas}
-          onSelectIdea={setSelectedIdea}
-        />
+        {/* Single Column Layout */}
+        <div className="divide-y divide-gray-200">
+          {paginatedIdeas.map((idea) => (
+            <motion.div
+              key={idea.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <AllUserIdeasCard
+                idea={idea}
+                onClick={() => setSelectedIdea(idea)}
+              />
+            </motion.div>
+          ))}
+        </div>
 
         <IdeaPagination
           currentPage={currentPage}

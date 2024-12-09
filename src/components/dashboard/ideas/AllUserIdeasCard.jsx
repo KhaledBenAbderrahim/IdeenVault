@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { StarIcon, LightBulbIcon, BeakerIcon, ChartBarIcon } from '@heroicons/react/24/solid';
 
-export default function IdeaCard({ idea, onClick }) {
+export default function AllUserIdeasCard({ idea, onClick }) {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('de-DE', {
@@ -21,6 +21,15 @@ export default function IdeaCard({ idea, onClick }) {
     }
   };
 
+  const getStatusBadgeColor = (status) => {
+    switch (status) {
+      case 'Aktiv': return 'bg-emerald-100 text-emerald-800 ring-emerald-600/20';
+      case 'In Entwicklung': return 'bg-blue-100 text-blue-800 ring-blue-600/20';
+      case 'Offen': return 'bg-amber-100 text-amber-800 ring-amber-600/20';
+      default: return 'bg-gray-100 text-gray-800 ring-gray-600/20';
+    }
+  };
+
   const getPhaseIcon = (phase) => {
     switch (phase) {
       case 'Konzept': return <LightBulbIcon className="h-4 w-4" />;
@@ -34,7 +43,7 @@ export default function IdeaCard({ idea, onClick }) {
     <motion.div
       whileTap={{ scale: 0.99 }}
       onClick={onClick}
-      className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 border border-gray-100"
+      className="group hover:bg-gray-50/50 transition-all duration-200 cursor-pointer p-4 sm:p-6"
     >
       <div className="flex flex-col space-y-4">
         {/* Header */}
@@ -50,6 +59,9 @@ export default function IdeaCard({ idea, onClick }) {
             </div>
             <p className="text-xs sm:text-sm text-gray-500">{idea.shortTitle}</p>
           </div>
+          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ring-1 ring-inset ${getStatusBadgeColor(idea.status)}`}>
+            {idea.status}
+          </span>
         </div>
 
         {/* Description */}
@@ -93,19 +105,6 @@ export default function IdeaCard({ idea, onClick }) {
               <span className="ml-1">{formatDate(idea.createdAt)}</span>
             </div>
           </div>
-        </div>
-
-        {/* View Details Button */}
-        <div className="pt-3 border-t border-gray-100 flex justify-end">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onClick();
-            }}
-            className="text-emerald-600 hover:text-emerald-700 text-sm font-medium transition-colors"
-          >
-            Details anzeigen →
-          </button>
         </div>
       </div>
     </motion.div>

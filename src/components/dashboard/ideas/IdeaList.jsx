@@ -1,40 +1,104 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import IdeaCard from './IdeaCard';
+import { motion } from 'framer-motion';
+import PendingIdeaCard from './PendingIdeaCard';
+import ApprovedIdeaCard from './ApprovedIdeaCard';
+import NewIdeaForm from '../NewIdeaForm';
+import IdeaDetails from '../IdeaDetails';
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import EmptyState from './EmptyState';
 
-export default function IdeaList({ ideas, onSelectIdea }) {
+export default function IdeaList({
+  ideas,
+  onSelectIdea,
+  onDeleteIdea,
+  showNewIdeaForm,
+  setShowNewIdeaForm,
+  selectedIdea,
+  setSelectedIdea,
+  deleteIdea,
+  setDeleteIdea,
+  onAddIdea,
+  onDeleteConfirm
+}) {
+  const pendingIdeas = ideas.filter(idea => !idea.hrApproved);
+  const approvedIdeas = ideas.filter(idea => idea.hrApproved);
+
+  if (ideas.length === 0) {
+    return <EmptyState />;
+  }
+
   return (
-    <div className="divide-y divide-gray-200">
-      <AnimatePresence>
-        {ideas.map((idea, index) => (
-          <motion.div
-            key={idea.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2, delay: index * 0.05 }}
-          >
-            <IdeaCard idea={idea} onClick={() => onSelectIdea(idea)} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
-
-      {ideas.length === 0 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="py-12 text-center"
-        >
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-4">
-            <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
+    <>
+      {/* Pending Ideas Section */}
+      {pendingIdeas.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+            Ausstehende Ideen
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {pendingIdeas.map((idea) => (
+              <motion.div
+                key={idea.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PendingIdeaCard
+                  idea={idea}
+                  onClick={() => onSelectIdea(idea)}
+                  onDelete={() => onDeleteIdea(idea)}
+                />
+              </motion.div>
+            ))}
           </div>
-          <p className="text-gray-500 text-sm sm:text-base">
-            Keine Ideen gefunden. Passen Sie Ihre Filter an oder erstellen Sie eine neue Idee.
-          </p>
-        </motion.div>
+        </div>
       )}
-    </div>
+
+      {/* Approved Ideas Section */}
+      {approvedIdeas.length > 0 && (
+        <div className="space-y-4 mt-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+            Angenommene Ideen
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {approvedIdeas.map((idea) => (
+              <motion.div
+                key={idea.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ApprovedIdeaCard
+                  idea={idea}
+                  onClick={() => onSelectIdea(idea)}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {showNewIdeaForm && (
+        <NewIdeaForm
+          onClose={() => setShowNewIdeaForm(false)}
+          onSubmit={onAddIdea}
+        />
+      )}
+
+      {selectedIdea && (
+        <IdeaDetails
+          idea={selectedIdea}
+          onClose={() => setSelectedIdea(null)}
+          onDelete={() => setDeleteIdea(selectedIdea)}
+        />
+      )}
+
+      <DeleteConfirmationModal
+        isOpen={!!deleteIdea}
+        onClose={() => setDeleteIdea(null)}
+        onConfirm={onDeleteConfirm}
+        ideaTitle={deleteIdea?.title}
+      />
+    </>
   );
 }
