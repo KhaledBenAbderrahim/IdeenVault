@@ -1,19 +1,60 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { QRCodeSVG } from 'qrcode.react';
 
 export default function MobileAppPromo() {
   return (
     <section className="relative min-h-screen overflow-hidden bg-black hidden lg:block">
-      {/* Background Image with Overlay */}
+      {/* Modern Gradient Background */}
       <div className="absolute inset-0">
-        <img
-          src="https://raw.githubusercontent.com/KhaledBenAbderrahim/CSRD/main/images/app-screenshot-1.png"
-          alt=""
-          className="w-full h-full object-cover object-center opacity-40"
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-emerald-950 to-black opacity-90" />
+        <motion.div
+          animate={{
+            backgroundPosition: ['0% 0%', '100% 100%'],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "linear"
+          }}
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.2) 0%, transparent 70%)',
+            filter: 'blur(40px)'
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-emerald-900/30" />
-        <div className="absolute inset-0 backdrop-blur-[2px]" />
+        
+        {/* Animated Mesh Pattern */}
+        <div className="absolute inset-0">
+          <svg className="w-full h-full opacity-20" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <motion.path
+              d="M0,50 Q25,30 50,50 T100,50 T150,50"
+              stroke="url(#gradient)"
+              strokeWidth="0.5"
+              fill="none"
+              animate={{
+                d: [
+                  "M0,50 Q25,30 50,50 T100,50 T150,50",
+                  "M0,50 Q25,70 50,50 T100,50 T150,50",
+                  "M0,50 Q25,30 50,50 T100,50 T150,50"
+                ]
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <defs>
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#10B981" stopOpacity="0.2" />
+                <stop offset="50%" stopColor="#059669" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#10B981" stopOpacity="0.2" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
       </div>
 
       {/* Content Container */}
@@ -36,7 +77,11 @@ export default function MobileAppPromo() {
                     viewport={{ once: true }}
                     className="inline-block"
                   >
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-emerald-400/10 text-emerald-400 ring-1 ring-emerald-400/20">
+                    <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/30 backdrop-blur-xl shadow-lg">
+                      <span className="relative flex h-2 w-2 mr-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                      </span>
                       Neu verfügbar
                     </span>
                   </motion.div>
@@ -48,9 +93,19 @@ export default function MobileAppPromo() {
                     className="mt-6 text-6xl font-bold tracking-tight text-white sm:text-7xl"
                   >
                     Ideenspeicher
-                    <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
+                    <motion.span 
+                      className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-500"
+                      animate={{ 
+                        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                      }}
+                      transition={{ 
+                        duration: 5,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    >
                       Mobile App
-                    </span>
+                    </motion.span>
                   </motion.h1>
                 </div>
 
@@ -60,7 +115,7 @@ export default function MobileAppPromo() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-400 leading-relaxed max-w-xl"
+                  className="text-xl text-gray-300 leading-relaxed max-w-xl backdrop-blur-sm bg-black/10 p-6 rounded-2xl border border-white/5 shadow-xl"
                 >
                   Entdecken Sie eine neue Dimension der Ideenfindung. 
                   Mit Ideenspeicher haben Sie die Kraft der Innovation 
@@ -75,113 +130,117 @@ export default function MobileAppPromo() {
                   transition={{ delay: 0.3 }}
                   className="space-y-6"
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-emerald-400/10 rounded-lg flex items-center justify-center">
-                      <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-300">Intuitive mobile Benutzeroberfläche</p>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-emerald-400/10 rounded-lg flex items-center justify-center">
-                      <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-300">Schnelle Ideenerfassung unterwegs</p>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-emerald-400/10 rounded-lg flex items-center justify-center">
-                      <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-300">Echtzeit-Benachrichtigungen</p>
-                  </div>
-                </motion.div>
-
-                {/* QR Code */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                  className="inline-block"
-                >
-                  <div className="bg-white/10 backdrop-blur-sm p-4 rounded-2xl">
-                    <QRCodeSVG
-                      value="https://ideenvault.app/download"
-                      size={120}
-                      level="H"
-                      includeMargin={true}
-                      bgColor="transparent"
-                      fgColor="#fff"
-                    />
-                  </div>
-                  <p className="mt-3 text-sm text-gray-400">
-                    Scannen Sie den QR-Code, um die App herunterzuladen
-                  </p>
-                </motion.div>
-
-                {/* Platform Badges */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 }}
-                  className="flex flex-wrap gap-4"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-emerald-400/10 backdrop-blur-sm"
-                  >
-                    <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                    </svg>
-                    <span className="text-emerald-400">iOS</span>
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-emerald-400/10 backdrop-blur-sm"
-                  >
-                    <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M16.61 15.15c-.46 0-.83-.37-.83-.83s.37-.83.83-.83.83.37.83.83-.37.83-.83.83m-9.22 0c-.46 0-.83-.37-.83-.83s.37-.83.83-.83.84.37.84.83-.37.83-.84.83m9.42-9.50l1.37-2.37c.07-.13.01-.29-.12-.35-.13-.07-.29-.01-.35.12l-1.38 2.39c-1.06-.47-2.25-.74-3.53-.74-1.28 0-2.46.27-3.53.74L7.89 3.05c-.07-.13-.23-.19-.35-.12-.13.07-.19.23-.12.35l1.37 2.37c-2.31 1.25-3.85 3.40-3.85 5.89h15.92c0-2.49-1.54-4.64-3.85-5.89M5.95 9.57c-.26 0-.47-.21-.47-.47s.21-.47.47-.47.47.21.47.47-.21.47-.47.47m12.10 0c-.26 0-.47-.21-.47-.47s.21-.47.47-.47.47.21.47.47-.21.47-.47.47M4.66 19.07c0 .75.61 1.36 1.36 1.36h1.31l.01 2.12c0 .75.61 1.36 1.36 1.36.75 0 1.36-.61 1.36-1.36v-2.12h2.89v2.12c0 .75.61 1.36 1.36 1.36.75 0 1.36-.61 1.36-1.36v-2.12h1.31c.75 0 1.36-.61 1.36-1.36V9.14H4.66v9.93z" />
-                    </svg>
-                    <span className="text-emerald-400">Android</span>
-                  </motion.div>
+                  {[
+                    {
+                      icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
+                      text: "Intuitive mobile Benutzeroberfläche"
+                    },
+                    {
+                      icon: "M13 10V3L4 14h7v7l9-11h-7z",
+                      text: "Schnelle Ideenerfassung unterwegs"
+                    },
+                    {
+                      icon: "M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z",
+                      text: "Echtzeit-Benachrichtigungen"
+                    }
+                  ].map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + index * 0.1 }}
+                      whileHover={{ scale: 1.02, backgroundColor: 'rgba(16, 185, 129, 0.15)' }}
+                      className="flex items-center space-x-4 backdrop-blur-sm bg-emerald-400/5 p-4 rounded-2xl border border-emerald-400/10 transition-all duration-300 cursor-pointer"
+                    >
+                      <div className="flex-shrink-0 w-12 h-12 bg-emerald-400/10 rounded-xl flex items-center justify-center">
+                        <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feature.icon} />
+                        </svg>
+                      </div>
+                      <p className="text-gray-200">{feature.text}</p>
+                    </motion.div>
+                  ))}
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* Decorative Elements */}
+            {/* iPhone Display Section */}
             <div className="lg:col-span-6 lg:col-start-7">
-              <div className="relative h-full">
-                {/* Animated circles */}
+              <div className="relative h-full flex items-center justify-center">
+                {/* Animated Background Elements */}
                 <motion.div
                   animate={{
                     scale: [1, 1.2, 1],
-                    rotate: [0, 90, 0],
+                    rotate: [0, 180, 0],
                   }}
                   transition={{
                     duration: 20,
                     repeat: Infinity,
                     ease: "linear"
                   }}
-                  className="absolute top-1/4 left-1/4 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"
+                  className="absolute w-[600px] h-[600px] bg-gradient-to-r from-emerald-500/20 to-emerald-300/20 rounded-full blur-3xl opacity-30"
+                  style={{
+                    filter: 'blur(60px)'
+                  }}
                 />
+
+                {/* iPhone Container with Fancy Effects */}
                 <motion.div
-                  animate={{
-                    scale: [1.2, 1, 1.2],
-                    rotate: [90, 0, 90],
-                  }}
-                  transition={{
-                    duration: 15,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl"
-                />
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="relative z-10"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="relative group"
+                  >
+                    {/* Glass Effect Container */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/30 via-emerald-300/30 to-emerald-500/30 rounded-[3rem] blur group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-gradient-xy" />
+                    
+                    <div className="relative backdrop-blur-xl bg-black/10 rounded-[3rem] p-8 border border-white/20 shadow-2xl">
+                      {/* iPhone Image with Floating Animation */}
+                      <motion.div
+                        animate={{
+                          y: [-10, 10, -10],
+                          rotate: [-1, 1, -1],
+                        }}
+                        transition={{
+                          duration: 6,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className="relative z-20"
+                      >
+                        <motion.img
+                          src="https://raw.githubusercontent.com/KhaledBenAbderrahim/CSRD/main/images/iPhone%2016%20Pro.png"
+                          alt="IdeenVault Mobile App"
+                          className="w-[300px] h-auto relative z-20 drop-shadow-2xl"
+                          style={{
+                            filter: 'drop-shadow(0 0 20px rgba(16, 185, 129, 0.3))'
+                          }}
+                        />
+                      </motion.div>
+
+                      {/* Decorative Glow Effects */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 to-transparent rounded-[3rem] z-10 opacity-60" />
+                      <motion.div
+                        animate={{
+                          opacity: [0.5, 0.8, 0.5],
+                          scale: [1, 1.1, 1],
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className="absolute -inset-4 bg-gradient-to-r from-emerald-500/0 via-emerald-500/30 to-emerald-500/0 rounded-[4rem] blur-xl z-0"
+                      />
+                    </div>
+                  </motion.div>
+                </motion.div>
               </div>
             </div>
           </div>
