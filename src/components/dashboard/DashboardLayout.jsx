@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import GiniChat from '../chat/GiniChat';
 
 export default function DashboardLayout() {
   const { user, logout } = useAuth();
@@ -151,6 +152,9 @@ export default function DashboardLayout() {
           </div>
         </main>
       </div>
+
+      {/* Gini Chat */}
+      {user?.email === 'neo.anderson@matrix.com' && <GiniChat />}
     </div>
   );
 }
