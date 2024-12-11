@@ -1,66 +1,25 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { IdeaPDF } from './IdeaPDF';
+import { generateProductVision } from '../../utils/aiVisionGenerator';
+import ProductVisionView from './ideas/ProductVisionView';
+import IdeaDetailsView from './ideas/IdeaDetailsView';
 
 export default function IdeaDetails({ idea, onClose }) {
-  const groups = [
-    {
-      title: "Grundinformationen",
-      fields: [
-        { label: "Serviceidee", value: idea.title },
-        { label: "Kürzel", value: idea.shortTitle },
-        { label: "Erläuterung", value: idea.description },
-        { label: "Typ", value: idea.type || 'Nicht spezifiziert' },
-        { label: "Kunde", value: idea.customer || 'Nicht spezifiziert' },
-        { label: "Schlagworte", value: idea.keywords?.join(", ") || 'Keine' },
-      ]
-    },
-    {
-      title: "Status & Phase",
-      fields: [
-        { label: "Status", value: idea.status },
-        { label: "Erläuterung Status", value: idea.statusDescription || 'Keine Erläuterung' },
-        { label: "Aktuelle Phase", value: idea.phase },
-        { label: "Angestrebtes Tor", value: idea.targetGate || 'Nicht definiert' },
-        { label: "Empfehlung Tor-durchlass", value: idea.gateRecommendation || 'Ausstehend' },
-      ]
-    },
-    {
-      title: "Priorisierung",
-      fields: [
-        { label: "Rang", value: idea.rank || 'Nicht bewertet' },
-        { label: "Prio", value: idea.priority },
-        { label: "KO-Filter", value: idea.koFilter || 'Nicht bewertet' },
-        { label: "KI-Prägung", value: idea.aiInfluence ? "Ja" : "Nein" },
-      ]
-    },
-    {
-      title: "Marktpotenzial",
-      fields: [
-        { label: "Originalität der Idee", value: idea.originality || 'Nicht bewertet' },
-        { label: "Größe der Zielgruppe", value: idea.targetGroupSize || 'Nicht definiert' },
-        { label: "Relevanz des Kundenproblems", value: idea.problemRelevance || 'Nicht bewertet' },
-        { label: "Attraktivität", value: idea.attractiveness || 'Nicht bewertet' },
-      ]
-    },
-    {
-      title: "Umsetzbarkeit",
-      fields: [
-        { label: "Erreichbarkeit der Zielgruppe", value: idea.targetGroupAccessibility || 'Nicht bewertet' },
-        { label: "Nähe zu bestehenden technischen Fähigkeiten", value: idea.technicalProximity || 'Nicht bewertet' },
-        { label: "Zeithorizont", value: idea.timeHorizon || 'Nicht definiert' },
-        { label: "MVP Reifegrad", value: idea.mvpMaturity || '0%' },
-      ]
-    },
-    {
-      title: "Risiko & Bewertung",
-      fields: [
-        { label: "Risiko", value: idea.risk || 'Nicht bewertet' },
-        { label: "Empfehlung Tor-durchlass", value: idea.gateRecommendation || 'Ausstehend' },
-      ]
+  const [showVision, setShowVision] = useState(false);
+  const [productVision, setProductVision] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleVisionToggle = async () => {
+    if (!productVision && !showVision) {
+      setIsLoading(true);
+      const vision = await generateProductVision(idea);
+      setProductVision(vision);
+      setIsLoading(false);
     }
-  ];
+    setShowVision(!showVision);
+  };
 
   return (
     <motion.div
@@ -84,24 +43,58 @@ export default function IdeaDetails({ idea, onClose }) {
             <p className="text-sm text-gray-500">{idea.shortTitle}</p>
           </div>
           <div className="flex items-center space-x-4">
-            <PDFDownloadLink
-              document={<IdeaPDF idea={idea} />}
-              fileName={`${idea.shortTitle}-details.pdf`}
-              className="btn-secondary"
+            {!showVision && (
+              <PDFDownloadLink
+                document={<IdeaPDF idea={idea} />}
+                fileName={`${idea.shortTitle}-details.pdf`}
+                className="btn-secondary"
+              >
+                {({ loading }) => (
+                  <span className="flex items-center">
+                    {loading ? (
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="w-5 h-5 border-2 border-emerald-600 border-t-transparent rounded-full"
+                      />
+                    ) : (
+                      <>
+                        <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Details als PDF
+                      </>
+                    )}
+                  </span>
+                )}
+              </PDFDownloadLink>
+            )}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleVisionToggle}
+              className={`btn-secondary ${isLoading ? 'opacity-75 cursor-wait' : ''}`}
+              disabled={isLoading}
             >
-              {({ loading }) => (
-                <span className="flex items-center">
-                  {loading ? 'Wird geladen...' : (
-                    <>
-                      <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      PDF Export
-                    </>
-                  )}
-                </span>
-              )}
-            </PDFDownloadLink>
+              <span className="flex items-center">
+                {isLoading ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-5 h-5 border-2 border-emerald-600 border-t-transparent rounded-full mr-2"
+                  />
+                ) : (
+                  <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {showVision ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    )}
+                  </svg>
+                )}
+                {showVision ? 'Zurück zu Details' : 'KI Vision anzeigen'}
+              </span>
+            </motion.button>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-500 transition-colors"
@@ -113,36 +106,29 @@ export default function IdeaDetails({ idea, onClose }) {
           </div>
         </div>
 
-        <div className="space-y-8">
-          {groups.map((group, index) => (
-            <div key={index} className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-emerald-800 mb-4">
-                {group.title}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {group.fields.map((field, fieldIndex) => (
-                  <div key={fieldIndex} className="space-y-1">
-                    <dt className="text-sm font-medium text-gray-500">
-                      {field.label}
-                    </dt>
-                    <dd className="text-sm text-gray-900">
-                      {field.value}
-                    </dd>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-8 flex justify-end space-x-4">
-          <button
-            onClick={onClose}
-            className="btn-primary"
-          >
-            <span>Schließen</span>
-          </button>
-        </div>
+        <AnimatePresence mode="wait">
+          {showVision ? (
+            <motion.div
+              key="vision"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ProductVisionView vision={productVision} idea={idea} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="details"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <IdeaDetailsView idea={idea} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </motion.div>
   );
