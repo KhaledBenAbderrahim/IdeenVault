@@ -26,16 +26,34 @@ const TypingIndicator = () => (
 );
 
 export default function GiniChat() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Hi! 👋 Ich bin Gini, deine KI-Assistentin für innovative Ideen. Ich bin noch in der Entwicklung, aber ich bin bald für dich da! Gemeinsam werden wir deine Ideen zum Leben erwecken! ✨",
-      sender: 'gini',
-    },
-  ]);
+  // Initialize state from localStorage if available
+  const [isOpen, setIsOpen] = useState(() => {
+    const saved = localStorage.getItem('giniChat.isOpen');
+    return saved ? JSON.parse(saved) : false;
+  });
+  
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem('giniChat.messages');
+    return saved ? JSON.parse(saved) : [
+      {
+        id: 1,
+        text: "Hi! 👋 Ich bin Gini, deine KI-Assistentin für innovative Ideen. Ich bin noch in der Entwicklung, aber ich bin bald für dich da! Gemeinsam werden wir deine Ideen zum Leben erwecken! ✨",
+        sender: 'gini',
+      },
+    ];
+  });
+
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('giniChat.isOpen', JSON.stringify(isOpen));
+  }, [isOpen]);
+
+  useEffect(() => {
+    localStorage.setItem('giniChat.messages', JSON.stringify(messages));
+  }, [messages]);
 
   const toggleChat = () => setIsOpen(!isOpen);
 

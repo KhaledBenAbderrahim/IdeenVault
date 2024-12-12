@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext(null);
@@ -35,8 +35,20 @@ const mockUsers = [
 ];
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('auth.user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const navigate = useNavigate();
+
+  // Save user to localStorage whenever it changes
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('auth.user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('auth.user');
+    }
+  }, [user]);
 
   const login = (email, password) => {
     const foundUser = mockUsers.find(
@@ -54,15 +66,12 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    navigate('/login');
-  };
-
-  const updateProfile = (updatedData) => {
-    setUser(prev => ({ ...prev, ...updatedData }));
+    localStorage.removeItem('auth.user');
+    navigate('/');
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateProfile }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
