@@ -1,160 +1,83 @@
 import React, { useState } from 'react';
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { motion } from 'framer-motion';
 import GiniChat from '../chat/GiniChat';
+import MobileNavigation from './navigation/MobileNavigation';
+import MobileProfileMenu from './navigation/MobileProfileMenu';
+import DesktopNavigation from './navigation/DesktopNavigation';
 
 export default function DashboardLayout() {
   const { user, logout } = useAuth();
-  const location = useLocation();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const navigation = [
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Ideen', path: '/dashboard/ideas' },
-    { name: 'IdeenTalk', path: '/dashboard/discussions' },
-    { name: 'Analytik', path: '/dashboard/analytics' },
-  ];
+  const [showMobileProfile, setShowMobileProfile] = useState(false);
 
   const handleLogout = () => {
     setShowProfileMenu(false);
+    setShowMobileProfile(false);
     logout();
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Fixed Header */}
-      <nav className="bg-white shadow-sm fixed w-full z-[100]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            {/* Logo and Mobile Menu Button */}
-            <div className="flex items-center">
-              <Link to="/" className="text-2xl font-bold text-emerald-600">
-                Ideenspeicher
-              </Link>
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="ml-4 md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"
-              >
-                <span className="sr-only">Menü öffnen</span>
-                {isMobileMenuOpen ? (
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
-              </button>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex md:space-x-8">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`${
-                    location.pathname === item.path
-                      ? 'border-emerald-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-
-            {/* Profile Menu */}
-            <div className="flex items-center">
-              <div className="relative">
-                <button
-                  onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className="flex items-center space-x-3 focus:outline-none"
-                >
-                  <span className="hidden sm:block text-sm font-medium text-gray-700">{user?.name}</span>
-                  <img
-                    src={user?.avatar}
-                    alt={user?.name}
-                    className="h-8 w-8 rounded-full"
-                  />
-                </button>
-
-                {showProfileMenu && (
-                  <>
-                    <div
-                      className="fixed inset-0 z-40"
-                      onClick={() => setShowProfileMenu(false)}
-                    />
-                    
-                    <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-                      <div className="py-1">
-                        <Link
-                          to="/dashboard/profile"
-                          onClick={() => setShowProfileMenu(false)}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        >
-                          Profil
-                        </Link>
-                        <Link
-                          to="/dashboard/settings"
-                          onClick={() => setShowProfileMenu(false)}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        >
-                          Einstellungen
-                        </Link>
-                        <button
-                          onClick={handleLogout}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        >
-                          Abmelden
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Navigation Menu */}
-          <div
-            className={`${
-              isMobileMenuOpen ? 'block' : 'hidden'
-            } md:hidden border-t border-gray-200 py-2`}
-          >
-            <div className="space-y-1">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`${
-                    location.pathname === item.path
-                      ? 'bg-emerald-50 text-emerald-600'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                  } block px-3 py-2 rounded-md text-base font-medium transition-colors duration-150`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* Desktop Navigation */}
+      <DesktopNavigation 
+        user={user}
+        showProfileMenu={showProfileMenu}
+        setShowProfileMenu={setShowProfileMenu}
+        onLogout={handleLogout}
+      />
 
       {/* Main Content */}
-      <div className="pt-16">
-        <main className="py-10">
+      <div className="pt-0 md:pt-16">
+        <main className="py-10 pb-20 md:pb-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Outlet />
           </div>
         </main>
       </div>
 
-      {/* Gini Chat */}
-      {user?.email === 'neo.anderson@matrix.com' && <GiniChat />}
+      {/* Mobile Navigation */}
+      <MobileNavigation />
+
+      {/* Mobile Profile Menu */}
+      <MobileProfileMenu
+        user={user}
+        isOpen={showMobileProfile}
+        onClose={() => setShowMobileProfile(false)}
+        onLogout={handleLogout}
+      />
+
+      {/* Floating Action Buttons - Mobile */}
+      <div className="fixed right-4 bottom-20 z-[60] flex flex-col space-y-3 md:hidden">
+        {/* Profile Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setShowMobileProfile(true)}
+          className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center border border-gray-200"
+        >
+          <img src={user?.avatar} alt={user?.name} className="w-10 h-10 rounded-full" />
+        </motion.button>
+
+        {/* Gini Chat Button */}
+        {user?.email === 'neo.anderson@matrix.com' && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <GiniChat />
+          </motion.div>
+        )}
+      </div>
+
+      {/* Desktop Gini Chat */}
+      {user?.email === 'neo.anderson@matrix.com' && (
+        <div className="hidden md:block">
+          <GiniChat />
+        </div>
+      )}
     </div>
   );
 }
