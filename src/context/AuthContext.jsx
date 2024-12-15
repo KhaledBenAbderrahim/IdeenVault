@@ -10,7 +10,7 @@ const mockUsers = [
     email: 'neo.anderson@matrix.com',
     password: 'matrix123',
     name: 'Neo Anderson',
-    type: 'admin',
+    type: 'user',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=neo',
     department: 'IT'
   },
@@ -58,7 +58,13 @@ export const AuthProvider = ({ children }) => {
     if (foundUser) {
       const { password, ...userWithoutPassword } = foundUser;
       setUser(userWithoutPassword);
-      navigate('/dashboard');
+      
+      // Redirect based on user type
+      if (foundUser.type === 'hr') {
+        navigate('/hr/dashboard');
+      } else {
+        navigate('/dashboard');
+      }
       return true;
     }
     return false;
