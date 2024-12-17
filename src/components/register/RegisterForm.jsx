@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { FaGithub, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
 import UserTypeSelector from './UserTypeSelector';
 import HomeNavigationButton from '../common/HomeNavigationButton';
 
-// Mock invitation codes - in a real app, these would be stored securely and managed by admins
 const VALID_HR_CODES = ['HR2024', 'ADMIN123', 'HRINVITE'];
+
+const DEPARTMENTS = [
+  'Engineering',
+  'Product',
+  'Marketing',
+  'Sales',
+  'Customer Service',
+  'HR',
+  'Others'
+];
 
 export default function RegisterForm({ userType, setUserType }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -19,10 +29,13 @@ export default function RegisterForm({ userType, setUserType }) {
     invitationCode: ''
   });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name ist erforderlich';
+    if (!formData.firstName.trim()) newErrors.firstName = 'Vorname ist erforderlich';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Nachname ist erforderlich';
     if (!formData.email.trim()) newErrors.email = 'E-Mail ist erforderlich';
     if (!formData.email.includes('@')) newErrors.email = 'Ungültige E-Mail-Adresse';
     if (!formData.password) newErrors.password = 'Passwort ist erforderlich';
@@ -84,26 +97,40 @@ export default function RegisterForm({ userType, setUserType }) {
   };
 
   return (
-    <div className="space-y-8">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="max-w-2xl mx-auto p-6 space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-6 w-full">
         <div className="space-y-4">
           <UserTypeSelector userType={userType} setUserType={setUserType} />
 
-          <div>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-                errors.name ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-              }`}
-              placeholder="Vollständiger Name"
-            />
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-            )}
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                placeholder="Vorname"
+                value={formData.firstName}
+                onChange={handleChange}
+                className={`w-full input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                  errors.firstName ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+                }`}
+              />
+              {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
+            </div>
+            <div className="flex-1">
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                placeholder="Nachname"
+                value={formData.lastName}
+                onChange={handleChange}
+                className={`w-full input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                  errors.lastName ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+                }`}
+              />
+              {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
+            </div>
           </div>
 
           <div>
@@ -111,135 +138,127 @@ export default function RegisterForm({ userType, setUserType }) {
               id="email"
               name="email"
               type="email"
+              placeholder="E-Mail"
               value={formData.email}
               onChange={handleChange}
-              className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+              className={`w-full input-field text-base sm:text-lg py-2.5 sm:py-3 ${
                 errors.email ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
               }`}
-              placeholder="E-Mail-Adresse"
             />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-            )}
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
 
-          <div>
+          <div className="relative">
             <input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Passwort"
               value={formData.password}
               onChange={handleChange}
-              className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+              className={`w-full input-field text-base sm:text-lg py-2.5 sm:py-3 pr-10 ${
                 errors.password ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
               }`}
-              placeholder="Passwort"
             />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-            )}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
 
-          <div>
+          <div className="relative">
             <input
               id="confirmPassword"
               name="confirmPassword"
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Passwort bestätigen"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+              className={`w-full input-field text-base sm:text-lg py-2.5 sm:py-3 pr-10 ${
                 errors.confirmPassword ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
               }`}
-              placeholder="Passwort bestätigen"
             />
-            {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
-            )}
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2"
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Abteilung
+            </label>
+            <select
+              id="department"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              className={`w-full input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                errors.department ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+              }`}
+            >
+              <option value="">Abteilung auswählen</option>
+              {DEPARTMENTS.map((dept) => (
+                <option key={dept} value={dept}>
+                  {dept}
+                </option>
+              ))}
+            </select>
+            {errors.department && <p className="text-red-500 text-sm mt-1">{errors.department}</p>}
           </div>
 
           {userType === 'hr' && (
-            <>
-              <div>
-                <input
-                  id="department"
-                  name="department"
-                  type="text"
-                  value={formData.department}
-                  onChange={handleChange}
-                  className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-                    errors.department ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-                  }`}
-                  placeholder="Abteilung"
-                />
-                {errors.department && (
-                  <p className="mt-1 text-sm text-red-600">{errors.department}</p>
-                )}
-              </div>
-
-              <div>
-                <input
-                  id="invitationCode"
-                  name="invitationCode"
-                  type="text"
-                  value={formData.invitationCode}
-                  onChange={handleChange}
-                  className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-                    errors.invitationCode ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-                  }`}
-                  placeholder="Einladungscode"
-                />
-                {errors.invitationCode && (
-                  <p className="mt-1 text-sm text-red-600">{errors.invitationCode}</p>
-                )}
-              </div>
-            </>
+            <div>
+              <input
+                id="invitationCode"
+                name="invitationCode"
+                type="text"
+                placeholder="Einladungscode"
+                value={formData.invitationCode}
+                onChange={handleChange}
+                className={`w-full input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                  errors.invitationCode ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+                }`}
+              />
+              {errors.invitationCode && <p className="text-red-500 text-sm mt-1">{errors.invitationCode}</p>}
+            </div>
           )}
         </div>
 
-        <motion.button
+        <button
           type="submit"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg py-3 px-4 font-medium shadow-md hover:shadow-lg transition-all duration-300"
+          className="w-full bg-blue-600 text-white rounded-lg py-3 font-semibold hover:bg-blue-700 transition duration-200"
         >
           Registrieren
-        </motion.button>
+        </button>
       </form>
 
-      <div className="space-y-6">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white text-gray-500">Oder registrieren mit</span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <motion.button
-            onClick={handleGithubLogin}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors duration-300 group"
-          >
-            <FaGithub className="text-2xl mr-2 group-hover:text-gray-700" />
-            <span className="font-medium group-hover:text-gray-700">GitHub</span>
-          </motion.button>
-
-          <motion.button
-            onClick={handleGoogleLogin}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors duration-300 group"
-          >
-            <FaGoogle className="text-2xl mr-2 text-red-500" />
-            <span className="font-medium group-hover:text-gray-700">Google</span>
-          </motion.button>
-        </div>
+      <div className="space-y-4 w-full">
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center gap-2 bg-white text-gray-700 border border-gray-300 rounded-lg py-3 font-semibold hover:bg-gray-50 transition duration-200"
+        >
+          <FaGoogle className="text-red-500" />
+          Mit Google fortfahren
+        </button>
+        <button
+          onClick={handleGithubLogin}
+          className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white rounded-lg py-3 font-semibold hover:bg-gray-800 transition duration-200"
+        >
+          <FaGithub />
+          Mit GitHub fortfahren
+        </button>
       </div>
 
-      <div className="flex justify-center pt-4">
+      <div className="flex justify-center mt-6">
         <HomeNavigationButton />
       </div>
     </div>

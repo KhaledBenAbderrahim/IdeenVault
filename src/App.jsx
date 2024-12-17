@@ -10,6 +10,9 @@ import Login from './components/Login';
 import Register from './components/Register';
 import DashboardLayout from './components/dashboard/DashboardLayout';
 import HRDashboardLayout from './components/hr/HRDashboardLayout';
+import MobileAppPromo from './components/MobileAppPromo';
+import Pricing from './components/Pricing';
+import Testimonials from './components/Testimonials';
 
 // HR Routes
 import HRReviewBoard from './components/hr/pages/HRReviewBoard';
@@ -60,6 +63,9 @@ export default function App() {
                 <Header />
                 <Hero />
                 <Features />
+                <MobileAppPromo />
+                <Pricing />
+                <Testimonials />
                 <Footer />
               </>
             } />
