@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
 import UserTypeSelector from './UserTypeSelector';
+import HomeNavigationButton from '../common/HomeNavigationButton';
 
 // Mock invitation codes - in a real app, these would be stored securely and managed by admins
 const VALID_HR_CODES = ['HR2024', 'ADMIN123', 'HRINVITE'];
 
 export default function RegisterForm({ userType, setUserType }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -45,8 +49,8 @@ export default function RegisterForm({ userType, setUserType }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Handle form submission
       console.log('Form submitted:', formData);
+      navigate('/');
     }
   };
 
@@ -56,156 +60,188 @@ export default function RegisterForm({ userType, setUserType }) {
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
   };
 
+  const handleGithubLogin = async () => {
+    try {
+      // Implement GitHub registration logic here
+      navigate('/');
+    } catch (error) {
+      console.error('GitHub registration failed:', error);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      // Implement Google registration logic here
+      navigate('/');
+    } catch (error) {
+      console.error('Google registration failed:', error);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
-      <div className="space-y-4">
-        <UserTypeSelector userType={userType} setUserType={setUserType} />
+    <div className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-4">
+          <UserTypeSelector userType={userType} setUserType={setUserType} />
 
-        <div>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={handleChange}
-            className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-              errors.name ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-            }`}
-            placeholder="Vollständiger Name"
-          />
-          {errors.name && (
-            <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+          <div>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleChange}
+              className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                errors.name ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+              }`}
+              placeholder="Vollständiger Name"
+            />
+            {errors.name && (
+              <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                errors.email ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+              }`}
+              placeholder="E-Mail-Adresse"
+            />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                errors.password ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+              }`}
+              placeholder="Passwort"
+            />
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                errors.confirmPassword ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+              }`}
+              placeholder="Passwort bestätigen"
+            />
+            {errors.confirmPassword && (
+              <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+            )}
+          </div>
+
+          {userType === 'hr' && (
+            <>
+              <div>
+                <input
+                  id="department"
+                  name="department"
+                  type="text"
+                  value={formData.department}
+                  onChange={handleChange}
+                  className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                    errors.department ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+                  }`}
+                  placeholder="Abteilung"
+                />
+                {errors.department && (
+                  <p className="mt-1 text-sm text-red-600">{errors.department}</p>
+                )}
+              </div>
+
+              <div>
+                <input
+                  id="invitationCode"
+                  name="invitationCode"
+                  type="text"
+                  value={formData.invitationCode}
+                  onChange={handleChange}
+                  className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
+                    errors.invitationCode ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+                  }`}
+                  placeholder="Einladungscode"
+                />
+                {errors.invitationCode && (
+                  <p className="mt-1 text-sm text-red-600">{errors.invitationCode}</p>
+                )}
+              </div>
+            </>
           )}
         </div>
 
-        <div>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-              errors.email ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-            }`}
-            placeholder="E-Mail-Adresse"
-          />
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-          )}
-        </div>
-
-        {userType === 'hr' && (
-          <>
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <input
-                id="department"
-                name="department"
-                type="text"
-                value={formData.department}
-                onChange={handleChange}
-                className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-                  errors.department ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-                }`}
-                placeholder="Abteilung"
-              />
-              {errors.department && (
-                <p className="mt-1 text-sm text-red-600">{errors.department}</p>
-              )}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <input
-                id="invitationCode"
-                name="invitationCode"
-                type="text"
-                value={formData.invitationCode}
-                onChange={handleChange}
-                className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-                  errors.invitationCode ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-                }`}
-                placeholder="HR Einladungscode"
-              />
-              {errors.invitationCode && (
-                <p className="mt-1 text-sm text-red-600">{errors.invitationCode}</p>
-              )}
-            </motion.div>
-          </>
-        )}
-
-        <div>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-              errors.password ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-            }`}
-            placeholder="Passwort"
-          />
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-          )}
-        </div>
-
-        <div>
-          <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className={`input-field text-base sm:text-lg py-2.5 sm:py-3 ${
-              errors.confirmPassword ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-            }`}
-            placeholder="Passwort bestätigen"
-          />
-          {errors.confirmPassword && (
-            <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
-          )}
-        </div>
-      </div>
-
-      <div className="flex items-center">
-        <input
-          id="terms"
-          name="terms"
-          type="checkbox"
-          required
-          className="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded transition-colors touch-manipulation"
-        />
-        <label htmlFor="terms" className="ml-2 block text-sm sm:text-base text-gray-900">
-          Ich stimme den <a href="#" className="text-emerald-600 hover:text-emerald-500 active:text-emerald-700 transition-colors touch-manipulation">Nutzungsbedingungen</a> zu
-        </label>
-      </div>
-
-      <div>
         <motion.button
           type="submit"
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="btn-primary w-full justify-center text-base sm:text-lg py-2.5 sm:py-3 touch-manipulation"
+          className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg py-3 px-4 font-medium shadow-md hover:shadow-lg transition-all duration-300"
         >
-          <span>Registrieren</span>
+          Registrieren
         </motion.button>
+      </form>
+
+      <div className="space-y-6">
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-white text-gray-500">Oder registrieren mit</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <motion.button
+            onClick={handleGithubLogin}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors duration-300 group"
+          >
+            <FaGithub className="text-2xl mr-2 group-hover:text-gray-700" />
+            <span className="font-medium group-hover:text-gray-700">GitHub</span>
+          </motion.button>
+
+          <motion.button
+            onClick={handleGoogleLogin}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors duration-300 group"
+          >
+            <FaGoogle className="text-2xl mr-2 text-red-500" />
+            <span className="font-medium group-hover:text-gray-700">Google</span>
+          </motion.button>
+        </div>
       </div>
-    </form>
+
+      <div className="flex justify-center pt-4">
+        <HomeNavigationButton />
+      </div>
+    </div>
   );
 }
