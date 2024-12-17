@@ -1,4 +1,3 @@
-// Configuration for HR navigation items
 export const hrNavigationLinks = [
   { 
     name: 'Übersicht',
@@ -18,7 +17,8 @@ export const hrNavigationLinks = [
   { 
     name: 'Ideenpostfach',
     path: '/hr/inbox',
-    icon: 'InboxIcon'
+    icon: 'InboxIcon',
+    showBadge: true // Enable badge for this item
   }
 ];
 

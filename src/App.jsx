@@ -10,36 +10,22 @@ import Login from './components/Login';
 import Register from './components/Register';
 import DashboardLayout from './components/dashboard/DashboardLayout';
 import HRDashboardLayout from './components/hr/HRDashboardLayout';
+
+// HR Routes
+import HRReviewBoard from './components/hr/pages/HRReviewBoard';
+import IdeaManagement from './components/hr/pages/IdeaManagement';
+import InnovationNetwork from './components/hr/pages/InnovationNetwork';
+import HRInbox from './components/hr/pages/HRInbox';
+import HRProfile from './components/hr/pages/HRProfile';
+import HRSettings from './components/hr/pages/HRSettings';
+
+// User Routes
 import Dashboard from './components/dashboard/Dashboard';
 import Ideas from './components/dashboard/Ideas';
 import Discussions from './components/dashboard/Discussions';
 import Profile from './components/dashboard/Profile';
 import Settings from './components/dashboard/Settings';
 import Analytics from './components/dashboard/Analytics';
-import QRCodeOverlay from './components/QRCodeOverlay';
-import MobileAppPromo from './components/MobileAppPromo';
-
-// HR Components
-import HRReviewBoard from './components/hr/pages/HRReviewBoard';
-import IdeaManagement from './components/hr/pages/IdeaManagement';
-import InnovationNetwork from './components/hr/pages/InnovationNetwork';
-import HRProfile from './components/hr/pages/HRProfile';
-import HRSettings from './components/hr/pages/HRSettings';
-import HRInbox from './components/hr/pages/HRInbox';
-
-function MainLayout({ children }) {
-  return (
-    <>
-      <Header />
-      <div className="pt-16">
-        {children}
-      </div>
-      <MobileAppPromo />
-      <Footer />
-      <QRCodeOverlay />
-    </>
-  );
-}
 
 export default function App() {
   return (
@@ -68,30 +54,24 @@ export default function App() {
               <Route path="analytics" element={<Analytics />} />
             </Route>
 
-            {/* Main routes with consistent header/footer layout */}
+            {/* Main routes */}
             <Route path="/" element={
-              <MainLayout>
-                <>
-                  <Hero />
-                  <Features />
-                </>
-              </MainLayout>
+              <>
+                <Header />
+                <Hero />
+                <Features />
+                <Footer />
+              </>
             } />
             <Route path="/about" element={
-              <MainLayout>
+              <>
+                <Header />
                 <About />
-              </MainLayout>
+                <Footer />
+              </>
             } />
-            <Route path="/login" element={
-              <MainLayout>
-                <Login />
-              </MainLayout>
-            } />
-            <Route path="/register" element={
-              <MainLayout>
-                <Register />
-              </MainLayout>
-            } />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </div>
       </AuthProvider>

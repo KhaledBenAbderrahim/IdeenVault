@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import HRDesktopNavigation from './navigation/HRDesktopNavigation';
 import HRMobileNavigation from './navigation/HRMobileNavigation';
 import MobileProfileMenu from '../dashboard/navigation/MobileProfileMenu';
+import HRGiniChat from './chat/HRGiniChat';
 
 export default function HRDashboardLayout() {
   const { user, logout } = useAuth();
@@ -56,6 +57,16 @@ export default function HRDashboardLayout() {
       >
         <img src={user?.avatar} alt={user?.name} className="w-10 h-10 rounded-full" />
       </motion.button>
+
+      {/* Gini Chat */}
+      <div className="hidden md:block">
+        <HRGiniChat />
+      </div>
+
+      {/* Mobile Gini Chat */}
+      <div className="md:hidden">
+        <HRGiniChat />
+      </div>
     </div>
   );
 }

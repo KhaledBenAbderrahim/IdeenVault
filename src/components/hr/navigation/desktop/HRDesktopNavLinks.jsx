@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { hrNavigationLinks } from '../HRNavigationConfig';
+import { useHRIdeas } from '../../../../hooks/useHRIdeas';
 
 export default function HRDesktopNavLinks() {
   const location = useLocation();
+  const { getStats } = useHRIdeas();
+  const stats = getStats();
 
   return (
     <div className="hidden md:flex md:space-x-8 ml-10">
       {hrNavigationLinks.map((item) => {
-        const isActive = location.pathname.startsWith(item.path);
+        const isActive = location.pathname === item.path;
         return (
           <Link
             key={item.name}
@@ -20,6 +23,15 @@ export default function HRDesktopNavLinks() {
               isActive ? 'text-emerald-600' : 'text-gray-500 group-hover:text-gray-700'
             }`}>
               {item.name}
+              {item.showBadge && stats.pending > 0 && (
+                <motion.span 
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="ml-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white ring-2 ring-white"
+                >
+                  {stats.pending}
+                </motion.span>
+              )}
             </span>
             {isActive && (
               <motion.div
