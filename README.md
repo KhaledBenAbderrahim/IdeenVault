@@ -1,124 +1,106 @@
-# 🚀 IdeenVault
+# 🚀 IdeenVault - Innovationsmanagement der Zukunft
 
-![Desktop View](https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/IdS%20-%20iPad%20Mini%20Mockup.png)
-![Mobile View](https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/iPhone%2013%20Pro%20-%20Mockup.png)
+<div align="center">
+  <img src="https://img.shields.io/badge/Status-In%20Development-brightgreen"/>
+  <img src="https://img.shields.io/badge/Version-1.0.0-blue"/>
+  <img src="https://img.shields.io/badge/License-MIT-yellow"/>
+</div>
 
-## 📝 Description
-IdeenVault is a sophisticated web application that revolutionizes the way we manage and organize ideas. Built with modern technologies, it combines German innovation ("Ideen" meaning ideas) with robust security ("Vault"), creating a powerful platform for creative minds. The sleek, modern interface showcases a thoughtfully designed dashboard that makes idea management both intuitive and efficient.
+## 🌟 Innovation neu gedacht
 
-### 🎯 Vision
-Our vision is to provide a centralized hub where individuals and teams can capture, develop, and transform their ideas into reality. The clean, minimalist design ensures that users can focus on what matters most - their creative process.
+IdeenVault revolutioniert die Art und Weise, wie Unternehmen Innovationen managen. Unsere Plattform verbindet deutsche Ingenieurskunst mit modernster KI-Technologie, um Ihre wertvollsten Ressourcen zu verwalten: Ihre Ideen.
 
-## ✨ Key Features
-- 💡 Intuitive idea creation and management
-- 📊 Interactive analytics dashboard
-- 💬 Discussion system for collaborative ideation
-- 📱 Mobile-responsive design
-- 🔍 Advanced search and filtering
-- 📄 PDF export functionality
-- 📱 QR code generation for mobile access
-- 🤖 AI-powered idea enhancement
-- 🔒 Enterprise-grade security
+<div align="center">
+  <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/IdS%20-%20iPad%20Mini%20Mockup.png" width="70%" alt="Desktop View"/>
+</div>
 
-## 🛠️ Tech Stack
+## 🎯 Was macht IdeenVault besonders?
 
-### Frontend
-- **Framework:** React 18
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS
-- **Routing:** React Router DOM
-- **Charts:** Chart.js with react-chartjs-2
-- **Animations:** Framer Motion
-- **UI Components:** 
-  - Headless UI
-  - Heroicons
-- **PDF Generation:** React-PDF Renderer
-- **QR Code:** qrcode.react
+Wir bieten eine zentrale Plattform, die den gesamten Innovationsprozess abdeckt - von der ersten Ideenskizze bis zur erfolgreichen Umsetzung. Mit unserem intuitiven Interface und KI-gestützten Funktionen machen wir Ideenmanagement effizienter und spannender als je zuvor.
 
-### Backend (Enterprise Solution)
-- **Serverless Architecture:** Azure Functions
-- **API Framework:** FastAPI
-- **Database:** PostgreSQL
-- **AI Integration:** OpenAI API
-- **Authentication:** Enterprise-grade security protocols
+<div align="center">
+  <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/iPhone%2013%20Pro%20-%20Mockup.png" width="40%" alt="Mobile View"/>
+</div>
 
-*Note: Due to business considerations, specific implementation details of the backend architecture are proprietary.*
+## ✨ Hauptfunktionen
 
-## 🚀 Getting Started
+### 💡 Intelligentes Ideenmanagement
+- **KI-gestützte Ideenverfeinerung**
+- **Automatische Kategorisierung**
+- **Intelligente Vorschläge**
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
+### 📊 Umfassende Analyse
+- **Echtzeit-Statistiken**
+- **Trendanalysen**
+- **Erfolgsmetriken**
 
-### Installation
+### 🤝 Kollaboration & Kommunikation
+- **Team-Workspaces**
+- **Kommentarsystem**
+- **Versionskontrolle**
 
-1. Clone the repository
+### 📱 Flexibler Zugriff
+- **Responsive Design**
+- **Mobile-First Ansatz**
+- **QR-Code Integration**
+
+## 🛠️ Technologie-Stack
+
+### Frontend-Technologien
+```javascript
+{
+  "Framework": "React 18",
+  "BuildTool": "Vite",
+  "Styling": ["Tailwind CSS", "Framer Motion"],
+  "UI": ["Headless UI", "Heroicons"],
+  "Extras": ["Chart.js", "React-PDF", "QR Code"]
+}
+```
+
+### Backend-Infrastruktur
+```python
+{
+  "Architecture": "Serverless (Azure Functions)",
+  "API": "FastAPI",
+  "Database": "PostgreSQL",
+  "AI": "OpenAI Integration",
+  "Security": "Enterprise-grade"
+}
+```
+
+*Aus geschäftlichen Gründen können keine weiteren Details zur Backend-Implementierung bereitgestellt werden.*
+
+## 🚀 Quick Start
+
 ```bash
+# Repository klonen
 git clone https://github.com/KhaledBenAbderrahim/IdeenVault.git
-```
 
-2. Navigate to the project directory
-```bash
+# Ins Projektverzeichnis wechseln
 cd IdeenVault
-```
 
-3. Install dependencies
-```bash
+# Dependencies installieren
 npm install
-# or
-yarn install
-```
 
-4. Start the development server
-```bash
+# Entwicklungsserver starten
 npm run dev
-# or
-yarn dev
 ```
 
-5. Build for production
-```bash
-npm run build
-# or
-yarn build
-```
+## 📈 Roadmap
 
-## 🌐 Project Structure
-```
-ideenvault/
-├── src/
-│   ├── components/
-│   │   ├── dashboard/
-│   │   └── common/
-│   ├── context/
-│   ├── assets/
-│   └── utils/
-├── public/
-└── dist/
-```
+- [x] MVP Release
+- [x] KI-Integration
+- [x] Mobile Optimierung
+- [ ] Team Collaboration Features
+- [ ] Advanced Analytics Dashboard
+- [ ] Enterprise Integration
 
-## 🔧 Configuration
-- `vite.config.js` - Vite configuration
-- `tailwind.config.js` - Tailwind CSS configuration
-- `postcss.config.js` - PostCSS configuration
+## 🤝 Kontakt & Support
 
-## 🚀 Deployment
-This project is configured for deployment on Vercel, offering:
-- Automatic deployments
-- Preview deployments for pull requests
-- Custom domain support
+Bei Fragen oder Anregungen stehen wir Ihnen gerne zur Verfügung. Öffnen Sie ein Issue oder kontaktieren Sie uns direkt.
 
-## 🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
+---
 
-## 📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👤 Author
-**Khaled Ben Abderrahim**
-- GitHub: [@KhaledBenAbderrahim](https://github.com/KhaledBenAbderrahim)
-
-## 🌟 Show your support
-Give a ⭐️ if you like this project!
-
-demo : https://ideen-vault.vercel.app/
+<div align="center">
+  <b>IdeenVault</b> - Wo Innovationen entstehen 🚀
+</div>
