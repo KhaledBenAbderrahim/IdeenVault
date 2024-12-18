@@ -16,43 +16,38 @@ A modern web application that makes idea management simple and exciting. Got a b
   <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/IdS%20-%20iPad%20Mini%20Mockup.png" width="70%" alt="Desktop View"/>
 </div>
 
-## 🎯 Features That Matter
+## 🎯 Core Features
 
-Everything you need for modern idea management:
+### 👤 User Profile
+- **Idea Dashboard**: Personal space to manage and track ideas
+- **Idea Submission**: Easy-to-use form with rich text editor
+- **Progress Tracking**: Monitor the status of submitted ideas
+- **Notifications**: Real-time updates on idea status changes
+- **History View**: Complete timeline of all submitted ideas
+- **Profile Management**: Customize profile and notification preferences
 
-- 💡 **Quick Capture** - from any device, anytime
-- 🤖 **AI Enhancement** - refine and develop ideas
-- 📊 **Smart Analytics** - track idea progress
-- 🔍 **Powerful Search** - find ideas instantly
-- 📱 **Full Responsiveness** - works on all devices
+### 👔 HR Portal
+- **Comprehensive Dashboard**: Overview of all submitted ideas
+- **Advanced Filtering**: Sort ideas by department, status, or date
+- **Evaluation Tools**: Rate and provide feedback on ideas
+- **Analytics Dashboard**: Track engagement and success metrics
+- **Export Functionality**: Generate reports in various formats
+- **Team Management**: Assign reviewers and manage permissions
+
+### 🔐 Authentication
+- **Multi-Platform Login**: 
+  - GitHub Integration
+  - Google Sign-in
+  - Microsoft Account
+  - Email/Password
+- **Role-Based Access**: Secure access management
+- **2FA Support**: Enhanced security option
 
 <div align="center">
   <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/iPhone%2013%20Pro%20-%20Mockup.png" width="40%" alt="Mobile View"/>
 </div>
 
-## ✨ Key Features
-
-### 💡 Intelligent Idea Management
-- **AI-powered Idea Refining**
-- **Automatic Categorization**
-- **Intelligent Suggestions**
-
-### 📊 Comprehensive Analysis
-- **Real-time Statistics**
-- **Trend Analysis**
-- **Success Metrics**
-
-### 🤝 Collaboration & Communication
-- **Team Workspaces**
-- **Comment System**
-- **Version Control**
-
-### 📱 Flexible Access
-- **Responsive Design**
-- **Mobile-First Approach**
-- **QR Code Integration**
-
-## 🛠️ Built with Modern Tech
+## 🛠️ Technical Stack
 
 ### Frontend
 ```javascript
@@ -61,7 +56,10 @@ Everything you need for modern idea management:
     "Framework": "React 18",
     "Styling": "Tailwind CSS",
     "Animation": "Framer Motion",
-    "UI": ["Headless UI", "Heroicons"]
+    "UI": ["Headless UI", "Heroicons"],
+    "State": "Redux Toolkit",
+    "Forms": "React Hook Form",
+    "Authentication": "NextAuth.js"
   }
 }
 ```
@@ -73,10 +71,29 @@ Everything you need for modern idea management:
     "Serverless": "Azure Functions",
     "API": "FastAPI",
     "Database": "PostgreSQL",
-    "AI": "OpenAI"
+    "AI": "OpenAI",
+    "Authentication": "OAuth 2.0"
   }
 }
 ```
+
+> **Note**: Detailed backend implementation specifics are not disclosed due to enterprise security protocols and intellectual property considerations. The system handles sensitive corporate data and implements proprietary algorithms for idea evaluation and enhancement.
+
+## ⚡ Key Features in Action
+
+### For Users
+- **Smart Idea Generation**: AI-powered suggestions to enhance idea descriptions
+- **Real-time Collaboration**: Comment and discuss ideas with team members
+- **File Attachments**: Support for images, PDFs, and other documents
+- **Mobile Optimization**: Full functionality on all devices
+- **Custom Categories**: Organize ideas with custom tags and categories
+
+### For HR Teams
+- **Automated Workflows**: Streamline idea review process
+- **Performance Metrics**: Track idea implementation success rates
+- **Department Analytics**: Monitor engagement across teams
+- **Custom Reports**: Generate detailed insights and statistics
+- **Bulk Actions**: Efficiently manage multiple ideas
 
 ## 🚀 Quick Start
 
@@ -98,9 +115,10 @@ npm run dev
 
 - [x] AI Integration - Done!
 - [x] Mobile Version - Done!
-- [ ] Enhanced Analytics
-- [ ] Team Features
-- [ ] Advanced AI Capabilities
+- [ ] Enhanced Analytics Dashboard
+- [ ] Advanced Team Collaboration
+- [ ] Machine Learning-Based Idea Scoring
+- [ ] Integration with Project Management Tools
 
 ## 🤝 Feedback
 
