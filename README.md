@@ -1,4 +1,4 @@
-# 🚀 IdeenVault - Modern Idea Management
+# 🚀 IdeenVault (IdeenSpeicher) - Modern Idea Management
 
 <div align="center">
   <img src="https://img.shields.io/badge/Status-Live-brightgreen"/>
@@ -8,7 +8,7 @@
 
 ## 🌟 Welcome to IdeenVault!
 
-A modern web application that makes idea management simple and exciting. Got a brilliant idea at work? Need a place to store it? Want to share it with the team? IdeenVault has got you covered!
+IdeenVault (German: IdeenSpeicher) is a modern web application that makes idea management simple and exciting. The name combines the German word "Ideen" (ideas) with "Vault"/"Speicher" (storage), reflecting its purpose as a secure vault for your innovative ideas. Got a brilliant idea at work? Need a place to store it? Want to share it with the team? IdeenVault has got you covered!
 
 👉 **[Check out the live demo here!](https://ideen-vault.vercel.app/)**
 
