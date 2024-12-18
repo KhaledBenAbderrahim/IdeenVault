@@ -1,9 +1,10 @@
 # 🚀 IdeenVault
 
-![IdeenVault Interface](https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/iPhone%2016%20Pro.png)
+![Desktop View](https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/IdS%20-%20iPad%20Mini%20Mockup.png)
+![Mobile View](https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/iPhone%2013%20Pro%20-%20Mockup.png)
 
 ## 📝 Description
-IdeenVault is a sophisticated web application that revolutionizes the way we manage and organize ideas. Built with React and Vite, it combines German innovation ("Ideen" meaning ideas) with robust security ("Vault"), creating a powerful platform for creative minds. The sleek, modern interface showcases a thoughtfully designed dashboard that makes idea management both intuitive and efficient.
+IdeenVault is a sophisticated web application that revolutionizes the way we manage and organize ideas. Built with modern technologies, it combines German innovation ("Ideen" meaning ideas) with robust security ("Vault"), creating a powerful platform for creative minds. The sleek, modern interface showcases a thoughtfully designed dashboard that makes idea management both intuitive and efficient.
 
 ### 🎯 Vision
 Our vision is to provide a centralized hub where individuals and teams can capture, develop, and transform their ideas into reality. The clean, minimalist design ensures that users can focus on what matters most - their creative process.
@@ -16,9 +17,13 @@ Our vision is to provide a centralized hub where individuals and teams can captu
 - 🔍 Advanced search and filtering
 - 📄 PDF export functionality
 - 📱 QR code generation for mobile access
+- 🤖 AI-powered idea enhancement
+- 🔒 Enterprise-grade security
 
 ## 🛠️ Tech Stack
-- **Frontend Framework:** React 18
+
+### Frontend
+- **Framework:** React 18
 - **Build Tool:** Vite
 - **Styling:** Tailwind CSS
 - **Routing:** React Router DOM
@@ -29,6 +34,15 @@ Our vision is to provide a centralized hub where individuals and teams can captu
   - Heroicons
 - **PDF Generation:** React-PDF Renderer
 - **QR Code:** qrcode.react
+
+### Backend (Enterprise Solution)
+- **Serverless Architecture:** Azure Functions
+- **API Framework:** FastAPI
+- **Database:** PostgreSQL
+- **AI Integration:** OpenAI API
+- **Authentication:** Enterprise-grade security protocols
+
+*Note: Due to business considerations, specific implementation details of the backend architecture are proprietary.*
 
 ## 🚀 Getting Started
 
