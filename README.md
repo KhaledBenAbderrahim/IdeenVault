@@ -10,6 +10,10 @@
 
 IdeenVault (German: IdeenSpeicher) is a modern web application that makes idea management simple and exciting. The name combines the German word "Ideen" (ideas) with "Vault"/"Speicher" (storage), reflecting its purpose as a secure vault for your innovative ideas. Got a brilliant idea at work? Need a place to store it? Want to share it with the team? IdeenVault has got you covered!
 
+<div align="center">
+  <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/ideenVault_features.png" width="80%" alt="IdeenVault Features Overview"/>
+</div>
+
 👉 **[Check out the live demo here!](https://ideen-vault.vercel.app/)**
 
 <div align="center">
@@ -17,6 +21,10 @@ IdeenVault (German: IdeenSpeicher) is a modern web application that makes idea m
 </div>
 
 ## 🎯 Core Features
+
+<div align="center">
+  <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/idea_management_features.png" width="80%" alt="Idea Management Features"/>
+</div>
 
 ### 👤 User Profile
 - **Idea Dashboard**: Personal space to manage and track ideas
