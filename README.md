@@ -22,9 +22,6 @@ IdeenVault (German: IdeenSpeicher) is a modern web application that makes idea m
 
 ## 🎯 Core Features
 
-<div align="center">
-  <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/idea_management_features.png" width="80%" alt="Idea Management Features"/>
-</div>
 
 ### 👤 User Profile
 - **Idea Dashboard**: Personal space to manage and track ideas
@@ -41,6 +38,12 @@ IdeenVault (German: IdeenSpeicher) is a modern web application that makes idea m
 - **Analytics Dashboard**: Track engagement and success metrics
 - **Export Functionality**: Generate reports in various formats
 - **Team Management**: Assign reviewers and manage permissions
+
+
+<div align="center">
+  <img src="https://github.com/KhaledBenAbderrahim/CSRD/blob/main/images/idea_management_features.png" width="80%" alt="Idea Management Features"/>
+</div>
+
 
 ### 🔐 Authentication
 - **Multi-Platform Login**: 
